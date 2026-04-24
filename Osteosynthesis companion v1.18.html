@@ -1598,6 +1598,7 @@
         const WorkingLengthTab = () => {
             const [gapType, setGapType] = useState('large');
             const [workingLength, setWorkingLength] = useState(60);
+            const [deepDiveOpen, setDeepDiveOpen] = useState(false);
 
             const bendFactor = workingLength / 100; 
             const deflection = gapType === 'large' ? bendFactor * 12 : Math.min(bendFactor * 12, 3);
@@ -1681,18 +1682,30 @@
                     {/* Mathematical Deep Dive: The P-Delta Effect */}
                     <div className="mt-12 bg-white dark:bg-slate-800 p-6 md:p-8 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-700">
                         <div className="space-y-4 mb-6 border-b border-slate-200 dark:border-slate-700 pb-6">
-                            <h3 className="text-xl font-bold text-rose-700 dark:text-rose-400 flex items-center">
-                                Mathematical Deep Dive: Secondary Bending (P-Delta Effect)
-                            </h3>
+                            <div className="flex items-start justify-between gap-4">
+                                <h3 className="text-xl font-bold text-rose-700 dark:text-rose-400">
+                                    Mathematical Deep Dive: Secondary Bending (P-Delta Effect)
+                                </h3>
+                                <button
+                                    onClick={() => setDeepDiveOpen(o => !o)}
+                                    className="flex-shrink-0 flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-rose-600 dark:text-rose-400 bg-rose-50 dark:bg-rose-900/20 border border-rose-200 dark:border-rose-800/50 px-3 py-1.5 rounded-lg hover:bg-rose-100 dark:hover:bg-rose-900/40 transition-colors"
+                                >
+                                    {deepDiveOpen ? '▲ Collapse' : '▼ Expand'}
+                                </button>
+                            </div>
                             <p className="text-sm text-slate-700 dark:text-slate-300 leading-relaxed italic">
                                 You might wonder: if the stress formula is <Latex math="\sigma = \frac{M \cdot y}{I}" />, and Working Length (<Latex math="L" />) isn't in that equation, how does increasing <Latex math="L" /> increase the stress? 
                             </p>
-                            <p className="text-sm text-slate-700 dark:text-slate-300 leading-relaxed">
-                                The answer is the <strong>P-Delta Effect</strong>. While the length of the plate doesn't change its cross-sectional Area Moment of Inertia (<Latex math="I" />), it drastically reduces the plate's overall structural stiffness (<Latex math="EI" />) against deflection (<Latex math="\delta" />). 
-                            </p>
-                            <p className="text-sm text-slate-700 dark:text-slate-300 leading-relaxed">
-                                As a compliant plate bows outwards under an axial load (<Latex math="P" />), the eccentricity (<Latex math="e" />) of that load physically increases. The new bending moment becomes <Latex math="M = P \cdot (e + \delta)" />. Because deflection (<Latex math="\delta" />) grows exponentially with length (governed by the secant function of the beam-column), the bending moment <Latex math="M" /> skyrockets, dragging the stress <Latex math="\sigma" /> up with it! This represents the exact mathematical formula utilised in the interactive calculator for bridging constructs.
-                            </p>
+                            {deepDiveOpen && (
+                                <div className="space-y-4 fade-in">
+                                    <p className="text-sm text-slate-700 dark:text-slate-300 leading-relaxed">
+                                        The answer is the <strong>P-Delta Effect</strong>. While the length of the plate doesn't change its cross-sectional Area Moment of Inertia (<Latex math="I" />), it drastically reduces the plate's overall structural stiffness (<Latex math="EI" />) against deflection (<Latex math="\delta" />). 
+                                    </p>
+                                    <p className="text-sm text-slate-700 dark:text-slate-300 leading-relaxed">
+                                        As a compliant plate bows outwards under an axial load (<Latex math="P" />), the eccentricity (<Latex math="e" />) of that load physically increases. The new bending moment becomes <Latex math="M = P \cdot (e + \delta)" />. Because deflection (<Latex math="\delta" />) grows exponentially with length (governed by the secant function of the beam-column), the bending moment <Latex math="M" /> skyrockets, dragging the stress <Latex math="\sigma" /> up with it! This represents the exact mathematical formula utilised in the interactive calculator for bridging constructs.
+                                    </p>
+                                </div>
+                            )}
                         </div>
 
                         <WorkingLengthInteractiveGraph />
@@ -2094,7 +2107,7 @@
 
         // --- MAIN APP ---
         function App() {
-            const [darkMode, setDarkMode] = useState(false);
+            const [darkMode, setDarkMode] = useState(true);
             const [activeTab, setActiveTab] = useState('core');
 
             useEffect(() => {
