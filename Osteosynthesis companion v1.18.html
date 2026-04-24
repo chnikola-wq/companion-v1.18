@@ -756,7 +756,7 @@
         };
 
         // --- WIDGET 3: WORKING LENGTH & P-DELTA EFFECT ---
-        const WorkingLengthInteractiveGraph = () => {
+        const WorkingLengthInteractiveGraph = ({ showFormulas = false }) => {
             const [wlValue, setWlValue] = useState(60); 
             const [isDragging, setIsDragging] = useState(false);
             
@@ -905,6 +905,7 @@
                         </div>
 
                         {/* Math Output Box */}
+                        {showFormulas && (
                         <div className="mt-6 p-4 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl flex flex-col gap-2 shadow-sm">
                             <div className="flex flex-col gap-1 items-center w-full overflow-x-auto pb-2">
                                 <div className="text-xs md:text-sm text-slate-800 dark:text-slate-200 w-full text-center py-1"><Latex math={mathDelta} /></div>
@@ -912,6 +913,7 @@
                                 <div className="text-[11px] md:text-[13px] text-rose-700 dark:text-rose-400 font-bold bg-rose-50 dark:bg-rose-900/20 px-4 py-2 rounded-lg mt-2 shadow-sm border border-rose-100 dark:border-rose-800/50 w-full text-center"><Latex math={mathSigma} /></div>
                             </div>
                         </div>
+                        )}
                     </div>
 
                     <div className="relative w-full max-w-3xl mx-auto select-none">
@@ -1708,7 +1710,7 @@
                             )}
                         </div>
 
-                        <WorkingLengthInteractiveGraph />
+                        <WorkingLengthInteractiveGraph showFormulas={deepDiveOpen} />
                     </div>
                 </div>
             );
@@ -1894,127 +1896,6 @@
             );
         };
 
-        // --- TAB 6: HEALING DYNAMICS ---
-        const HealingTab = () => (
-            <div className="fade-in space-y-6">
-                <div className="bg-emerald-50 dark:bg-emerald-900/10 p-6 rounded-2xl border border-emerald-100 dark:border-emerald-800/50">
-                    <p className="text-sm md:text-base leading-relaxed text-slate-700 dark:text-slate-300">
-                        Most plate failures are fatigue failures, occurring over weeks or months. If secondary healing occurs, the maturing callus gradually takes over load-bearing. <strong>A flexible plate generates higher initial stress, but stimulates callus formation much faster</strong>, resulting in a safer long-term construct than an overly rigid plate that delays healing.
-                    </p>
-                    
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
-                        <div className="bg-white dark:bg-slate-800 p-5 rounded-xl shadow-sm border border-emerald-200 dark:border-emerald-700/50">
-                            <strong className="text-emerald-700 dark:text-emerald-400 text-sm block mb-2">Why does flexible plate stress drop so low?</strong>
-                            <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
-                                In the graph below, the stress on the flexible plate eventually drops <em>below</em> that of the rigid plate. This happens because early micro-motion stimulates a much larger, more robust callus. Once this massive callus mineralises, it becomes incredibly stiff and bears almost the entire load, heavily shielding the plate. The rigid plate suppresses callus size, forcing the hardware to carry a higher proportion of the load for a longer duration.
-                            </p>
-                        </div>
-                        <div className="bg-white dark:bg-slate-800 p-5 rounded-xl shadow-sm border border-emerald-200 dark:border-emerald-700/50">
-                            <strong className="text-emerald-700 dark:text-emerald-400 text-sm block mb-2">Energy Absorption &amp; Screw Protection</strong>
-                            <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
-                                A more flexible construct acts like a biological shock absorber. By absorbing kinetic energy through elastic deformation (flexing), the plate prevents peak impact forces from being transmitted directly into the anchor points. This heavily protects the fragile bone-screw interface from micro-fractures, aseptic loosening, and screw pull-out.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-                <div className="bg-white dark:bg-slate-800 p-6 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-700">
-                    <svg viewBox="0 0 500 250" className="w-full h-auto">
-                        <line x1="50" y1="200" x2="450" y2="200" className="stroke-slate-400 stroke-2" />
-                        <line x1="50" y1="200" x2="50" y2="20" className="stroke-slate-400 stroke-2" />
-                        <text x="250" y="230" className="fill-slate-500 text-xs font-bold" textAnchor="middle">Healing Time (Weeks)</text>
-                        <text x="20" y="110" className="fill-slate-500 text-xs font-bold" transform="rotate(-90 20 110)" textAnchor="middle">Plate Stress (MPa)</text>
-                        
-                        {/* Callus Stiffness Curve */}
-                        <path d="M 50 195 Q 250 195 380 30" fill="none" className="stroke-slate-300 dark:stroke-slate-600 stroke-2 stroke-dasharray-4" />
-                        <text x="390" y="30" className="fill-slate-400 dark:fill-slate-500 text-[10px] font-bold">Callus Stiffening</text>
-
-                        {/* Rigid Plate */}
-                        <path d="M 50 120 C 200 120, 250 175, 450 175" fill="none" className="stroke-blue-500 stroke-3" />
-                        
-                        {/* Flexible Plate */}
-                        <path d="M 50 60 C 150 60, 200 185, 450 185" fill="none" className="stroke-amber-500 stroke-3" />
-
-                        {/* Legend */}
-                        <circle cx="320" cy="80" r="5" className="fill-blue-500" />
-                        <text x="335" y="84" className="fill-slate-700 dark:fill-slate-200 text-[10px] font-bold">Rigid Plate (Short WL)</text>
-                        <circle cx="320" cy="105" r="5" className="fill-amber-500" />
-                        <text x="335" y="109" className="fill-slate-700 dark:fill-slate-200 text-[10px] font-bold">Flexible Plate (Long WL)</text>
-                    </svg>
-                </div>
-            </div>
-        );
-
-        // --- TAB 7: DECISION MATRIX ---
-        const DecisionMatrixTab = () => (
-            <div className="fade-in space-y-6">
-                <div className="bg-slate-800 text-white p-6 rounded-2xl shadow-md border border-slate-700">
-                    <p className="text-sm md:text-base leading-relaxed text-slate-200">
-                        Adapted from <em>Figure 8 of MacLeod & Pankaj (2018)</em>. Use this matrix to systematically configure working length and predict plate stress based on fracture geometry.
-                    </p>
-                </div>
-
-                <div className="space-y-6">
-                    <div className="bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-700 p-6">
-                        <h3 className="text-lg font-black text-slate-800 dark:text-slate-100 uppercase tracking-widest mb-6 border-b border-slate-200 dark:border-slate-700 pb-2">Step 1: Is there a Bone-Plate Offset?</h3>
-                        
-                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                            {/* YES OFFSET BRANCH */}
-                            <div className="bg-blue-50 dark:bg-blue-900/10 p-5 rounded-xl border border-blue-200 dark:border-blue-800/50">
-                                <div className="inline-block bg-blue-600 text-white font-bold px-3 py-1 rounded mb-4 text-xs">YES, Offset Present</div>
-                                
-                                <div className="space-y-6">
-                                    <div className="border-l-4 border-rose-400 pl-4 py-1">
-                                        <strong className="text-sm text-slate-800 dark:text-slate-200 block">Gap > 1mm (Comminuted)</strong>
-                                        <span className="text-[10px] font-bold uppercase tracking-wider text-rose-600 dark:text-rose-400 bg-rose-100 dark:bg-rose-900/30 px-2 py-0.5 rounded mt-1 inline-block">Load-Bearing</span>
-                                        <p className="text-xs text-slate-600 dark:text-slate-400 mt-2">Provide sufficient IFM while minimising plate stress.</p>
-                                        <div className="mt-3 flex gap-4 text-xs font-bold text-slate-700 dark:text-slate-300">
-                                            <span className="bg-white dark:bg-slate-800 px-2 py-1 rounded shadow-sm border border-slate-200 dark:border-slate-700">Working Length <span className="text-rose-500">↑</span></span>
-                                            <span className="bg-white dark:bg-slate-800 px-2 py-1 rounded shadow-sm border border-slate-200 dark:border-slate-700">Plate Stress <span className="text-rose-500">↑</span></span>
-                                        </div>
-                                    </div>
-                                    
-                                    <div className="border-l-4 border-emerald-400 pl-4 py-1">
-                                        <strong className="text-sm text-slate-800 dark:text-slate-200 block">Gap &lt; 1mm (Simple)</strong>
-                                        <span className="text-[10px] font-bold uppercase tracking-wider text-emerald-600 dark:text-emerald-400 bg-emerald-100 dark:bg-emerald-900/30 px-2 py-0.5 rounded mt-1 inline-block">Load-Sharing</span>
-                                        <p className="text-xs text-slate-600 dark:text-slate-400 mt-2">Sufficient working length alleviates plate stress as bony contact is made at lower loads.</p>
-                                        <div className="mt-3 flex gap-4 text-xs font-bold text-slate-700 dark:text-slate-300">
-                                            <span className="bg-white dark:bg-slate-800 px-2 py-1 rounded shadow-sm border border-slate-200 dark:border-slate-700">Working Length <span className="text-emerald-500">↑</span></span>
-                                            <span className="bg-white dark:bg-slate-800 px-2 py-1 rounded shadow-sm border border-slate-200 dark:border-slate-700">Plate Stress <span className="text-emerald-500">↓</span></span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            {/* NO OFFSET BRANCH */}
-                            <div className="bg-slate-100 dark:bg-slate-800/50 p-5 rounded-xl border border-slate-200 dark:border-slate-700">
-                                <div className="inline-block bg-slate-600 text-white font-bold px-3 py-1 rounded mb-4 text-xs">NO, Plate is flush</div>
-                                
-                                <div className="space-y-6">
-                                    <div className="border-l-4 border-rose-400 l-4 py-1">
-                                        <strong className="text-sm text-slate-800 dark:text-slate-200 block">Fracture Not Reduced</strong>
-                                        <span className="text-[10px] font-bold uppercase tracking-wider text-rose-600 dark:text-rose-400 bg-rose-100 dark:bg-rose-900/30 px-2 py-0.5 rounded mt-1 inline-block">Load-Bearing</span>
-                                        <p className="text-xs text-slate-600 dark:text-slate-400 mt-2">IFM and plate stress are entirely determined by fracture gap size. Working Length effectively equals Fracture Width.</p>
-                                        <div className="mt-3 flex gap-4 text-xs font-bold text-slate-700 dark:text-slate-300">
-                                            <span className="bg-white dark:bg-slate-800 px-2 py-1 rounded shadow-sm border border-slate-200 dark:border-slate-700">Fracture Width <span className="text-rose-500">↑</span></span>
-                                            <span className="bg-white dark:bg-slate-800 px-2 py-1 rounded shadow-sm border border-slate-200 dark:border-slate-700">Plate Stress <span className="text-rose-500">↑</span></span>
-                                        </div>
-                                    </div>
-                                    
-                                    <div className="border-l-4 border-emerald-400 pl-4 py-1">
-                                        <strong className="text-sm text-slate-800 dark:text-slate-200 block">Completely Reduced</strong>
-                                        <span className="text-[10px] font-bold uppercase tracking-wider text-emerald-600 dark:text-emerald-400 bg-emerald-100 dark:bg-emerald-900/30 px-2 py-0.5 rounded mt-1 inline-block">Load-Sharing</span>
-                                        <p className="text-xs text-slate-600 dark:text-slate-400 mt-2">Fracture reduction is vastly more important than screw placement. Goal is Primary Bone Healing.</p>
-                                        <div className="mt-3 text-xs font-bold text-slate-500 dark:text-slate-400 bg-white dark:bg-slate-800 px-3 py-2 rounded shadow-sm border border-slate-200 dark:border-slate-700 inline-block">
-                                            Screw placement changes are structurally insignificant
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        );
 
         // --- TAB 8: ADVANCED CONCEPTS ---
         const AdvancedMechanicsTab = () => (
@@ -2121,12 +2002,10 @@
                 { id: 'workingLength', label: 'Working Length', icon: <IconActivity /> },
                 { id: 'offset', label: 'Plate Offset', icon: <IconShield /> },
                 { id: 'screws', label: 'DCP vs LCP', icon: <IconSettings /> },
-                { id: 'healing', label: 'Healing', icon: <IconTrendingUp /> },
-                { id: 'decision', label: 'Decision Matrix', icon: <IconGitMerge /> },
                 { id: 'advanced', label: 'Advanced Mechanics', icon: <IconCpu /> }
             ];
 
-            const showReferences = ['workingLength', 'offset', 'screws', 'healing', 'decision', 'advanced'].includes(activeTab);
+            const showReferences = ['workingLength', 'offset', 'screws', 'advanced'].includes(activeTab);
 
             return (
                 <div className="min-h-screen flex flex-col font-sans relative">
@@ -2170,8 +2049,6 @@
                             {activeTab === 'workingLength' && <WorkingLengthTab />}
                             {activeTab === 'offset' && <OffsetTab />}
                             {activeTab === 'screws' && <ScrewMechanicsTab />}
-                            {activeTab === 'healing' && <HealingTab />}
-                            {activeTab === 'decision' && <DecisionMatrixTab />}
                             {activeTab === 'advanced' && <AdvancedMechanicsTab />}
                         </div>
 
