@@ -854,7 +854,7 @@
             
             // Render Math equations
             const mathDelta = `\\delta = e \\left[ \\sec\\left(\\frac{L}{2} \\sqrt{\\frac{P}{EI}}\\right) - 1 \\right] = \\mathbf{${currentDelta.toFixed(2)} \\text{ mm}}`;
-            const mathM = `M_{total} = P \\times (e + \\delta) = 1,000 \\times (5 + ${currentDelta.toFixed(2)}) = \\mathbf{${formatNum(currentM)} \\text{ N·mm}}`;
+            const mathM = `M_{total} = P \\times (e + \\delta) = 1,000 \\times (5 + ${currentDelta.toFixed(2)}) = \\mathbf{${formatNum(currentM)} \\text{ N}\\cdot\\text{mm}}`;
             const mathSigma = `\\sigma = \\frac{M_{total} \\cdot y}{I} = \\frac{${formatNum(currentM)} \\cdot 1.5}{25} = \\mathbf{${Math.round(currentStress)} \\text{ MPa}}`;
 
             return (
@@ -1204,7 +1204,7 @@
             <div className="fade-in space-y-8">
                 <div className="bg-amber-50 dark:bg-amber-900/10 p-6 rounded-2xl border border-amber-100 dark:border-amber-800/50 shadow-inner">
                     <p className="text-sm md:text-base leading-relaxed text-slate-700 dark:text-slate-300">
-                        Before testing constructs in the v3.8 Calculator, surgeons must master three distinct biomechanical properties: <strong>Bending Stress & AMI</strong>, <strong>Composite Axis Shift</strong>, and the <strong>Material Compliance Paradox</strong>. Confusing these leads to hardware failure.
+                        Before testing constructs in this Companion, surgeons must master three distinct biomechanical properties: <strong>Bending Stress & AMI</strong>, <strong>Composite Axis Shift</strong>, and the <strong>Material Compliance Paradox</strong>. Confusing these leads to hardware failure.
                     </p>
                     <p className="text-sm md:text-base leading-relaxed text-slate-700 dark:text-slate-300 mt-4 border-t border-amber-200 dark:border-amber-800/50 pt-4">
                         <strong>Clinical Scope:</strong> The composite models detailed below are specifically for <strong>simple fractures that are well reduced and compressed</strong> (load-sharing). In comminuted bridging osteosynthesis (load-bearing), the construct is only as strong as the isolated implant, and these complex bone-plate interactions do not apply.
@@ -1560,7 +1560,7 @@
 
                         <div className="mt-auto bg-slate-50 dark:bg-slate-900 p-4 rounded-xl border border-slate-200 dark:border-slate-700">
                             <p className="text-xs text-slate-600 dark:text-slate-400">
-                                <strong>Clinical Tip:</strong> Placing a plate <em>Medially</em> vs <em>Anteriorly</em> completely flips which anatomical axis benefits from robust Tension Band mechanics versus vulnerable Open-Gap mechanics. Test this via the "Placement" toggle in the v3.8 app.
+                                <strong>Clinical Tip:</strong> Placing a plate <em>Medially</em> vs <em>Anteriorly</em> completely flips which anatomical axis benefits from robust Tension Band mechanics versus vulnerable Open-Gap mechanics. Always verify which surface faces the dominant bending force for your specific anatomy.
                             </p>
                         </div>
                     </div>
@@ -1586,7 +1586,7 @@
 
                         <div className="mt-auto bg-slate-50 dark:bg-slate-900 p-4 rounded-xl border border-slate-200 dark:border-slate-700">
                             <p className="text-xs text-slate-600 dark:text-slate-400">
-                                <strong>Clinical Tip:</strong> 180° setups excel in biological healing, while 90° setups sacrifice fatigue resilience to establish rigid alignment against buckling. Use the "Double Plating" tab in v3.8 to view the exact penalty of skew bending.
+                                <strong>Clinical Tip:</strong> 180° setups excel in biological healing, while 90° setups sacrifice fatigue resilience to establish rigid alignment against buckling. Finite element models confirm that 90° orthogonal configurations carry a significant fatigue penalty compared to 180° parallel setups due to skew bending stress risers.
                             </p>
                         </div>
                     </div>
@@ -1691,7 +1691,7 @@
                                 The answer is the <strong>P-Delta Effect</strong>. While the length of the plate doesn't change its cross-sectional Area Moment of Inertia (<Latex math="I" />), it drastically reduces the plate's overall structural stiffness (<Latex math="EI" />) against deflection (<Latex math="\delta" />). 
                             </p>
                             <p className="text-sm text-slate-700 dark:text-slate-300 leading-relaxed">
-                                As a compliant plate bows outwards under an axial load (<Latex math="P" />), the eccentricity (<Latex math="e" />) of that load physically increases. The new bending moment becomes <Latex math="M = P \cdot (e + \delta)" />. Because deflection (<Latex math="\delta" />) grows exponentially with length (governed by the secant function of the beam-column), the bending moment <Latex math="M" /> skyrockets, dragging the stress <Latex math="\sigma" /> up with it! This represents the exact mathematical formula utilised in the v3.8 calculator for bridging constructs.
+                                As a compliant plate bows outwards under an axial load (<Latex math="P" />), the eccentricity (<Latex math="e" />) of that load physically increases. The new bending moment becomes <Latex math="M = P \cdot (e + \delta)" />. Because deflection (<Latex math="\delta" />) grows exponentially with length (governed by the secant function of the beam-column), the bending moment <Latex math="M" /> skyrockets, dragging the stress <Latex math="\sigma" /> up with it! This represents the exact mathematical formula utilised in the interactive calculator for bridging constructs.
                             </p>
                         </div>
 
@@ -1756,6 +1756,46 @@
                                     </marker>
                                 </defs>
                             </svg>
+                        </div>
+                    </div>
+
+                    {/* The Combined Lever Effect */}
+                    <div className="mt-8 bg-white dark:bg-slate-800 p-6 md:p-8 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-700">
+                        <div className="space-y-4 mb-6 border-b border-slate-200 dark:border-slate-700 pb-6">
+                            <h3 className="text-xl font-bold text-indigo-700 dark:text-indigo-400">
+                                The Combined Lever Effect
+                            </h3>
+                            <p className="text-sm text-slate-700 dark:text-slate-300 leading-relaxed">
+                                Offset (<Latex math="e" />) does not act in isolation. In a bridging construct, the plate also deflects laterally under load (<Latex math="\delta" />). Because both eccentricities act in the same direction, they are <strong>directly additive</strong>. The true bending moment is therefore:
+                            </p>
+                            <div className="bg-indigo-50 dark:bg-indigo-900/20 p-4 rounded-lg border-l-4 border-indigo-400 text-sm text-slate-700 dark:text-slate-300 flex items-center justify-between">
+                                <span className="font-semibold">Combined Moment:</span>
+                                <Latex math={`M_{total} = P \\times (e + \\delta)`} />
+                            </div>
+                            <p className="text-sm text-slate-700 dark:text-slate-300 leading-relaxed">
+                                This means that <strong>offset amplifies the P-Delta effect</strong>. The higher the initial eccentricity (<Latex math="e" />), the greater the baseline bending moment before any deflection even occurs. As working length grows and <Latex math="\delta" /> climbs exponentially, the starting value of <Latex math="e" /> is compounded at every step.
+                            </p>
+                        </div>
+
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div className="bg-rose-50 dark:bg-rose-900/10 p-5 rounded-xl border border-rose-200 dark:border-rose-800/50">
+                                <strong className="text-rose-700 dark:text-rose-400 text-sm block mb-2">High Offset + Long Working Length</strong>
+                                <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
+                                    A large offset generates a high baseline moment. A long working length then amplifies this with exponential deflection. The two effects compound to produce catastrophic plate stress—the most dangerous construct combination.
+                                </p>
+                            </div>
+                            <div className="bg-emerald-50 dark:bg-emerald-900/10 p-5 rounded-xl border border-emerald-200 dark:border-emerald-800/50">
+                                <strong className="text-emerald-700 dark:text-emerald-400 text-sm block mb-2">Periosteal Contact (<Latex math="e = 0" />)</strong>
+                                <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
+                                    When the plate lies flush against the periosteum, the initial eccentricity is zero and there is no baseline bending moment. Any deflection (<Latex math="\delta" />) that develops must do all the work alone. This is the mechanically optimal starting condition.
+                                </p>
+                            </div>
+                        </div>
+
+                        <div className="mt-6 bg-slate-50 dark:bg-slate-900 p-4 rounded-xl border border-slate-200 dark:border-slate-700">
+                            <p className="text-xs text-slate-600 dark:text-slate-400">
+                                <strong className="text-indigo-700 dark:text-indigo-400">Clinical Rule:</strong> Minimise bone-plate offset wherever blood supply allows. Every millimetre of offset (<Latex math="e" />) adds a fixed baseline moment of <Latex math="P \times e" /> that persists throughout the entire healing phase, compounding the P-Delta amplification from working length.
+                            </p>
                         </div>
                     </div>
                 </div>
