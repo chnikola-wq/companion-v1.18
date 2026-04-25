@@ -1204,6 +1204,17 @@
         // --- TAB 1: CORE BIOMECHANICS ---
         const CoreMechanicsTab = () => (
             <div className="fade-in space-y-8">
+                {/* Introduction */}
+                <div className="bg-slate-50 dark:bg-slate-800/60 p-6 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-inner">
+                    <h3 className="text-base font-bold text-slate-800 dark:text-slate-100 mb-3">Introduction</h3>
+                    <p className="text-sm md:text-base leading-relaxed text-slate-700 dark:text-slate-300">
+                        The models in this section describe the behaviour of a <strong>well-reduced, compressed construct</strong> — one that is designed for load-sharing between plate and bone. However, even a perfectly compressed fracture can experience an <strong>open-gap loading condition</strong>: this occurs when the externally applied bending moments are directed so as to <em>open</em> the fracture gap rather than compress it further. Under open-gap loading, the cortical edges cannot transmit tensile force, cortical contact on the tension side is lost, and the planned load-sharing breaks down — leaving the plate to carry a disproportionate share of the load.
+                    </p>
+                    <p className="text-sm md:text-base leading-relaxed text-slate-700 dark:text-slate-300 mt-3">
+                        The analyses that follow assume a <strong>four-point bending</strong> type of load, which is the standard model for diaphyseal bone subjected to physiological bending forces.
+                    </p>
+                </div>
+
                 <div className="bg-amber-50 dark:bg-amber-900/10 p-6 rounded-2xl border border-amber-100 dark:border-amber-800/50 shadow-inner">
                     <p className="text-sm md:text-base leading-relaxed text-slate-700 dark:text-slate-300">
                         Before testing constructs in this Companion, surgeons must master three distinct biomechanical properties: <strong>Bending Stress & AMI</strong>, <strong>Composite Axis Shift</strong>, and the <strong>Material Compliance Paradox</strong>. Confusing these leads to hardware failure.
@@ -1610,7 +1621,10 @@
                 <div className="fade-in space-y-6">
                     <div className="bg-blue-50 dark:bg-blue-900/20 p-6 rounded-2xl border border-blue-100 dark:border-blue-800/50">
                         <p className="text-sm md:text-base leading-relaxed text-slate-700 dark:text-slate-300">
-                            <strong>Working length</strong> is the unsupported distance between the innermost screws. Increasing it makes the plate more flexible. However, this flexibility can either alleviate or multiply plate stress depending entirely on the fracture pattern.
+                            <strong>Working length</strong> — the unsupported span between the innermost screws — is the principal determinant of plate stress in two distinct clinical scenarios: <strong>(1) bridging (comminuted) constructs</strong>, where no cortical contact exists and the plate bears the entire load; and <strong>(2) compressed constructs loaded in open-gap mode</strong>, where externally applied moments tend to open the fracture gap and cortical contact on the tension side is therefore lost. In both situations the plate behaves as an isolated beam spanning the working length, so the same mechanical principles govern stress.
+                        </p>
+                        <p className="text-sm md:text-base leading-relaxed text-slate-700 dark:text-slate-300 mt-3">
+                            The interactive model and mathematics below present the influence of working length in the <strong>bridging configuration</strong>. Because the load-bearing mechanism is identical, this analysis is also a valid approximation of what happens in a compressed construct that is subjected to open-gap loading. Increasing the working length makes the plate more flexible; however, this flexibility either alleviates or multiplies plate stress depending on whether cortical contact can be re-established.
                         </p>
                     </div>
 
