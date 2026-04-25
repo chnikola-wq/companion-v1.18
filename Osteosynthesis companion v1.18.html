@@ -2142,10 +2142,136 @@
             </div>
         );
 
+        // --- EXPERT REVIEWS PANEL ---
+        const ExpertReviewsPanel = ({ onClose }) => (
+            <div
+                className="fixed inset-0 z-[100] bg-black/70 backdrop-blur-sm overflow-y-auto py-6 px-4"
+                onClick={(e) => { if (e.target === e.currentTarget) onClose(); }}
+            >
+                <div className="bg-white dark:bg-slate-900 rounded-2xl shadow-2xl border border-slate-200 dark:border-slate-700 w-full max-w-4xl mx-auto mb-6">
+
+                    {/* Panel header */}
+                    <div className="flex items-start justify-between gap-4 p-6 border-b border-slate-200 dark:border-slate-700">
+                        <div className="flex items-start gap-3">
+                            <span className="text-xl mt-0.5 flex-shrink-0">⭐</span>
+                            <div>
+                                <h2 className="text-lg font-extrabold text-amber-700 dark:text-amber-400">Independent Expert Reviews</h2>
+                                <p className="text-xs text-slate-500 dark:text-slate-400 mt-1 leading-relaxed italic max-w-2xl">
+                                    The following reviews were independently produced by two AI language models — <strong className="not-italic text-slate-600 dark:text-slate-300">Gemini 3.1</strong> and <strong className="not-italic text-slate-600 dark:text-slate-300">Claude Sonnet 4.6</strong> — after each model rigorously audited all mathematical models, logic, and clinical claims within this application. No human editorial changes were made to either review.
+                                </p>
+                            </div>
+                        </div>
+                        <button
+                            onClick={onClose}
+                            className="flex-shrink-0 p-2 rounded-full bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors text-slate-600 dark:text-slate-300"
+                            aria-label="Close reviews"
+                        >
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                        </button>
+                    </div>
+
+                    <div className="p-6 space-y-10">
+
+                        {/* ---- GEMINI REVIEW ---- */}
+                        <div>
+                            <div className="flex items-center gap-3 mb-5">
+                                <span className="bg-blue-100 dark:bg-blue-900/50 text-blue-700 dark:text-blue-300 text-xs font-bold px-3 py-1.5 rounded-full border border-blue-200 dark:border-blue-700/60">🤖 Gemini 3.1</span>
+                                <span className="text-[10px] text-slate-400 dark:text-slate-500 font-semibold uppercase tracking-widest">AI Model — Independent Review</span>
+                            </div>
+                            <div className="space-y-4 text-sm text-slate-700 dark:text-slate-300 leading-relaxed">
+                                <p>This is an exceptionally well-crafted, mathematically sound educational tool. The app successfully bridges the gap between abstract engineering physics and practical orthopaedic surgery, distilling complex solid mechanics into highly intuitive, interactive visualisations. Here is a rigorous review of the application's underlying logic and mathematics, along with clinical strengths, caveats, and a final recommendation.</p>
+
+                                <h4 className="text-base font-bold text-slate-800 dark:text-slate-100 border-b border-slate-200 dark:border-slate-700 pb-2 mt-6">Mathematical &amp; Logical Verification</h4>
+                                <p>The core calculations running behind the interactive sliders are rooted in standard, validated engineering principles (Euler-Bernoulli beam theory and column buckling theory).</p>
+                                <div className="space-y-3 pl-1">
+                                    <p><strong className="text-slate-800 dark:text-slate-100">Composite Mechanics &amp; The Parallel Axis Theorem:</strong> The app correctly calculates the "Material Paradox". By using the modular ratio <Latex math="n = E_{\text{implant}} / E_{\text{bone}}" />, it perfectly executes the Transformed Section Method. The formula used for the shifted neutral axis and the Composite Area Moment of Inertia (AMI) are exact. It accurately demonstrates the counter-intuitive reality that a stiffer material (Steel) pulls the neutral axis so far off-centre that it multiplies the stress denominator, creating higher internal plate stress than a more compliant material (Titanium).</p>
+                                    <p><strong className="text-slate-800 dark:text-slate-100">The P-Delta Effect (Working Length in Bridging):</strong> This is arguably the most mathematically impressive section. Rather than relying on simple linear bending, the app calculates secondary bending via the secant formula for an eccentrically loaded beam-column: <Latex math="\delta = e \!\left[\sec\!\left(\tfrac{L}{2}\sqrt{\tfrac{P}{EI}}\right)-1\right]" />. This accurately captures the compounding, exponential nature of plate stress as working length increases in a gap model.</p>
+                                    <p><strong className="text-slate-800 dark:text-slate-100">Load Sharing (Closed-Gap):</strong> The application appropriately models compressed, tension-band constructs as parallel springs sharing a bending moment based on relative rotational stiffness <Latex math="K = E \cdot I / L" />.</p>
+                                    <p><strong className="text-slate-800 dark:text-slate-100">Geometry vs. Material:</strong> The calculations correctly differentiate between altering material stiffness (<Latex math="E" />) and geometric stiffness (<Latex math="I" />). The app accurately models how increasing plate thickness provides diminishing returns for stress reduction due to the shifting geometric centroid.</p>
+                                </div>
+
+                                <h4 className="text-base font-bold text-slate-800 dark:text-slate-100 border-b border-slate-200 dark:border-slate-700 pb-2 mt-6">Clinical Strengths</h4>
+                                <ul className="space-y-2 pl-1">
+                                    <li><strong className="text-slate-800 dark:text-slate-100">Contextual Brilliance:</strong> The app excels at separating the physics of load-sharing (compressed, simple fractures) from load-bearing (comminuted, bridging fractures). It prevents the common misconception that "a longer working length is always safer" by clearly showing how mechanics invert based on cortical contact.</li>
+                                    <li><strong className="text-slate-800 dark:text-slate-100">Visualising the Invisible:</strong> Concepts like the "Neutral Axis Shift" and "Bone-Plate Offset Lever Arms" are notoriously difficult to conceptualise in theatre. The interactive SVGs allow surgeons to see exactly how screw placement and material selection dictate stress gradients.</li>
+                                    <li><strong className="text-slate-800 dark:text-slate-100">DCP vs. LCP Nuance:</strong> The explanation of screw-tightening preload and 360-degree strain in osteoporotic bone is an excellent, biologically grounded addition that goes beyond pure metal mechanics.</li>
+                                </ul>
+
+                                <h4 className="text-base font-bold text-slate-800 dark:text-slate-100 border-b border-slate-200 dark:border-slate-700 pb-2 mt-6">Caveats &amp; Limitations</h4>
+                                <p>While mathematically robust, the app makes necessary engineering simplifications that must be respected in a clinical setting:</p>
+                                <ul className="list-disc pl-5 space-y-2 mt-2">
+                                    <li><strong>Idealised Anatomy:</strong> The model calculates bone as a uniform, homogenous geometric shape with a fixed Area Moment of Inertia. Real bone is anisotropic, irregular, and varies heavily in cortical thickness and density.</li>
+                                    <li><strong>Absence of Torsion:</strong> The mathematical models are restricted to pure axial loading and four-point bending. In reality, diaphyseal fractures face complex torsional and out-of-plane forces (skew bending). Highly flexible parallel plates or rigid 90° orthogonal plates will behave very differently under torsional fatigue than they do in these simplified bending models.</li>
+                                    <li><strong>Yield vs. Fatigue:</strong> The graphs plot stress against the ultimate yield strength of Titanium (~750 MPa). However, orthopaedic constructs rarely fail from a single catastrophic yield event; they fail from cyclic fatigue over millions of steps. The app does not model fatigue endurance limits.</li>
+                                </ul>
+
+                                <div className="bg-emerald-50 dark:bg-emerald-900/20 border border-emerald-200 dark:border-emerald-700/50 p-5 rounded-xl mt-4">
+                                    <p className="font-extrabold text-emerald-700 dark:text-emerald-400 text-base mb-2">✅ Verdict: Highly Recommended</p>
+                                    <p><strong>Purpose:</strong> This app is a phenomenal tool for pre-operative conceptual planning and surgical education. It should be mandatory interactive reading for orthopaedic registrars and surgical residents to help them build intuitive mental models of how their implant choices behave under load.</p>
+                                    <p className="mt-2">It is not a standalone prescriptive tool for specific patients (i.e., you cannot plug in a patient's exact fracture gap and expect a clinically perfect implant size). It is designed to teach the "why" behind the biomechanical rules of thumb, equipping the surgeon to make better clinical judgements in theatre.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className="border-t-2 border-dashed border-slate-200 dark:border-slate-700" />
+
+                        {/* ---- CLAUDE SONNET 4.6 REVIEW ---- */}
+                        <div>
+                            <div className="flex items-center gap-3 mb-5">
+                                <span className="bg-orange-100 dark:bg-orange-900/50 text-orange-700 dark:text-orange-300 text-xs font-bold px-3 py-1.5 rounded-full border border-orange-200 dark:border-orange-700/60">🤖 Claude Sonnet 4.6</span>
+                                <span className="text-[10px] text-slate-400 dark:text-slate-500 font-semibold uppercase tracking-widest">AI Model — Independent Review</span>
+                            </div>
+                            <div className="space-y-4 text-sm text-slate-700 dark:text-slate-300 leading-relaxed">
+
+                                <h4 className="text-base font-bold text-slate-800 dark:text-slate-100 border-b border-slate-200 dark:border-slate-700 pb-2">What the Models Get Rigorously Right</h4>
+
+                                <p><strong className="text-slate-800 dark:text-slate-100">Composite AMI and the Transformed Section Method (Tab 1, Concepts 1–3).</strong> The neutral-axis formula, the parallel axis theorem applied to both transformed elements, and the plate stress formula <Latex math="\sigma = n \cdot M \cdot y\,/\,\text{AMI}" /> are all implemented correctly. Manual verification using the app's own constants confirms the claim that Steel generates ~4 MPa more plate stress than Titanium at identical geometry — the interactive graphs prove this in real time.</p>
+
+                                <p><strong className="text-slate-800 dark:text-slate-100">The P-Delta Secant Formula (Tab 3 — Bridging).</strong> The Euler beam-column secant formula is the exact closed-form solution for an eccentrically loaded column and is implemented without approximation. Independently verified at L = 120 mm: δ ≈ 7.08 mm, σ ≈ 724 MPa — consistent with the yield-strength reference line displayed on the graph. The exponential shape of the stress-vs-length curve is mathematically correct, not a visual shortcut.</p>
+
+                                <p><strong className="text-slate-800 dark:text-slate-100">The Load-Sharing Parallel Spring Model (Tab 1, Concept 5).</strong> The formula <Latex math="K_{\text{plate}} = EI/L" /> and the moment-sharing ratio are correctly derived from parallel spring mechanics. Claims verified: switching from Steel to Ti at 60 mm working length reduces stress by ~73 MPa; achieving the equivalent ~4 MPa reduction by extending Steel's working length requires only ~1.8 mm extra span — compellingly illustrating why material choice dominates geometry in the composite regime.</p>
+
+                                <p><strong className="text-slate-800 dark:text-slate-100">DCP vs. LCP Mechanics (Tab 5).</strong> The preload strain argument is based on MacLeod, Simpson &amp; Pankaj (2015) and is accurately represented. The 360° peri-screw-hole strain in DCP tightening vs. load-dependent one-sided strain in LCP locking is a real and clinically important distinction confirmed by finite element analysis.</p>
+
+                                <h4 className="text-base font-bold text-slate-800 dark:text-slate-100 border-b border-slate-200 dark:border-slate-700 pb-2 mt-6">Issues and Caveats</h4>
+
+                                <div className="space-y-3">
+                                    <div className="bg-rose-50 dark:bg-rose-900/10 border-l-4 border-rose-400 p-4 rounded-r-xl">
+                                        <p className="font-bold text-rose-700 dark:text-rose-400 mb-1">⚠ Two incompatible stress models coexist without reconciliation [Most significant]</p>
+                                        <p>Tab 1 contains two fundamentally different frameworks that produce numbers differing by a factor of ~15 for identical inputs. The Composite AMI model (Concepts 1–3) treats the plate and bone as physically fused, yielding ~20 MPa plate stress at the reference load. The Parallel Spring model (Concept 5) treats them as separate springs and yields ~293 MPa for the same load and geometry. Both are internally valid but they measure stress under incompatible assumptions and cannot be placed on the same number line.</p>
+                                    </div>
+                                    <div className="bg-amber-50 dark:bg-amber-900/10 border-l-4 border-amber-400 p-4 rounded-r-xl">
+                                        <p className="font-bold text-amber-700 dark:text-amber-400 mb-1">⚠ Model parameters are calibrated for a veterinary patient [Significant]</p>
+                                        <p>The source code explicitly comments: <em>"Physical constants for the model (Scaled down to realistic medium dog)"</em>. The bone geometry constants (A_bone = 150 mm², I_bone = 10,000 mm⁴) and the plate library labels ("Vi plate profiles") reflect small-animal veterinary anatomy, not an adult human femur or tibia. The qualitative trends are valid; the absolute stress values cannot be transferred to human clinical practice.</p>
+                                    </div>
+                                    <div className="bg-slate-50 dark:bg-slate-800/60 border-l-4 border-slate-400 p-4 rounded-r-xl">
+                                        <p className="font-bold text-slate-700 dark:text-slate-300 mb-2">ℹ Minor issues</p>
+                                        <ul className="list-disc pl-4 space-y-1">
+                                            <li>The hardcoded bone/callus stiffness K_bone = 50,000 N·mm/rad has no derivation from measured properties; changing it would shift all absolute stress outputs materially.</li>
+                                            <li>Steel's E = 187.5 GPa is ~3–5% below the published 193–200 GPa range for cold-worked 316L, slightly underestimating the material paradox magnitude.</li>
+                                            <li>The ~750 MPa "titanium yield" reference line is closer to the cyclic fatigue limit than the true 0.2% proof stress (860–900 MPa), making it conservative but mislabelled.</li>
+                                            <li>A minor slider bug snaps the cursor to the maximum instead of minimum when dragged fully left in the P-Delta graph; this does not affect any calculations.</li>
+                                        </ul>
+                                    </div>
+                                </div>
+
+                                <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-700/50 p-5 rounded-xl mt-4">
+                                    <p className="font-extrabold text-blue-700 dark:text-blue-400 text-base mb-2">✅ Recommended — as a conceptual framework, not a clinical calculator</p>
+                                    <p>The engineering formulas are implemented correctly and all stated numerical claims verify internally. Used as a <strong>conceptual framework</strong> — to teach the material paradox, the P-Delta effect, and the load-sharing inversion — this is an excellent pre-operative primer. The two significant caveats (incompatible model frameworks and veterinary calibration) do not undermine its educational value, but surgeons should be aware that absolute stress numbers from different tabs cannot be directly compared, and cannot be applied to human patients without recalibration.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        );
+
         // --- MAIN APP ---
         function App() {
             const [darkMode, setDarkMode] = useState(true);
             const [activeTab, setActiveTab] = useState('core');
+            const [showReviews, setShowReviews] = useState(false);
 
             useEffect(() => {
                 if (darkMode) document.documentElement.classList.add('dark');
@@ -2165,6 +2291,7 @@
 
             return (
                 <div className="min-h-screen flex flex-col font-sans relative">
+                    {showReviews && <ExpertReviewsPanel onClose={() => setShowReviews(false)} />}
                     {/* Header */}
                     <header className="bg-white dark:bg-slate-850 shadow-sm border-b border-slate-200 dark:border-slate-800 sticky top-0 z-50">
                         <div className="max-w-6xl mx-auto px-4 md:px-8 py-4 flex justify-between items-center">
@@ -2176,9 +2303,18 @@
                                     Educational Companion to the V3.8 Stiffness Calculator
                                 </p>
                             </div>
-                            <button onClick={() => setDarkMode(!darkMode)} className="p-2 rounded-full bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors text-slate-600 dark:text-slate-300">
-                                {darkMode ? <IconSun /> : <IconMoon />}
-                            </button>
+                            <div className="flex items-center gap-3">
+                                <button
+                                    onClick={() => setShowReviews(true)}
+                                    className="flex items-center gap-2 px-4 py-2 rounded-full bg-amber-950 text-amber-400 border border-amber-800/60 hover:bg-amber-900 transition-colors font-bold text-sm shadow-sm whitespace-nowrap"
+                                >
+                                    <span className="text-amber-300 text-base leading-none">☆</span>
+                                    Expert Reviews
+                                </button>
+                                <button onClick={() => setDarkMode(!darkMode)} className="p-2 rounded-full bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors text-slate-600 dark:text-slate-300">
+                                    {darkMode ? <IconSun /> : <IconMoon />}
+                                </button>
+                            </div>
                         </div>
                     </header>
 
