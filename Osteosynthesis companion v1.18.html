@@ -1288,6 +1288,34 @@
             );
         };
 
+        // Note on Materials expandable component
+        const NoteOnMaterials = () => {
+            const [open, setOpen] = React.useState(false);
+            return (
+                <div className="bg-amber-50 dark:bg-amber-900/10 p-6 rounded-2xl border border-amber-100 dark:border-amber-800/50 shadow-inner">
+                    <div className="flex items-center justify-between gap-4">
+                        <h4 className="text-sm font-bold text-amber-800 dark:text-amber-300 flex items-center gap-2">
+                            <span>📌</span> Note on Materials
+                        </h4>
+                        <button
+                            onClick={() => setOpen(o => !o)}
+                            className="flex-shrink-0 flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-amber-700 dark:text-amber-400 bg-amber-100 dark:bg-amber-900/30 border border-amber-300 dark:border-amber-700/60 px-3 py-1.5 rounded-lg hover:bg-amber-200 dark:hover:bg-amber-900/60 transition-colors"
+                        >
+                            {open ? '▲ Hide' : '▼ Expand'}
+                        </button>
+                    </div>
+                    {open && (
+                        <div className="fade-in mt-4 pt-4 border-t border-amber-200 dark:border-amber-800/50">
+                            <p className="text-sm md:text-base leading-relaxed text-slate-700 dark:text-slate-300">
+                                <strong>Note on Materials:</strong> In all mathematical models below, 'Steel' refers strictly to cold-worked 316L Stainless Steel (<Latex math="E = 187.5 \text{ GPa}" />) and 'Titanium' refers to Ti-6Al-4V Alloy (<Latex math="E = 114.5 \text{ GPa}" />).<br/><br/>
+                                <em>Formula Note:</em> <Latex math="1 \text{ GPa} = 1,000 \text{ MPa}" />. To balance standard metric units (Newtons and mm) so the formulas output stress exactly in MPa (<Latex math="\text{N/mm}^2" />), the modulus <Latex math="E" /> must be inputted into the formulas as <Latex math="187,500" /> and <Latex math="114,500" /> respectively.
+                            </p>
+                        </div>
+                    )}
+                </div>
+            );
+        };
+
         // --- TAB 1: CORE BIOMECHANICS ---
         const CoreMechanicsTab = () => (
             <div className="fade-in space-y-8">
@@ -1302,18 +1330,7 @@
                     </p>
                 </div>
 
-                <div className="bg-amber-50 dark:bg-amber-900/10 p-6 rounded-2xl border border-amber-100 dark:border-amber-800/50 shadow-inner">
-                    <p className="text-sm md:text-base leading-relaxed text-slate-700 dark:text-slate-300">
-                        Before testing constructs in this Companion, surgeons must master three distinct biomechanical properties: <strong>Bending Stress & AMI</strong>, <strong>Composite Axis Shift</strong>, and the <strong>Material Compliance Paradox</strong>. Confusing these leads to hardware failure.
-                    </p>
-                    <p className="text-sm md:text-base leading-relaxed text-slate-700 dark:text-slate-300 mt-4 border-t border-amber-200 dark:border-amber-800/50 pt-4">
-                        <strong>Clinical Scope:</strong> The composite models detailed below are specifically for <strong>simple fractures that are well reduced and compressed</strong> (load-sharing). In comminuted bridging osteosynthesis (load-bearing), the construct is only as strong as the isolated implant, and these complex bone-plate interactions do not apply.
-                    </p>
-                    <p className="text-sm md:text-base leading-relaxed text-slate-700 dark:text-slate-300 mt-4 border-t border-amber-200 dark:border-amber-800/50 pt-4">
-                        <strong>Note on Materials:</strong> In all mathematical models below, 'Steel' refers strictly to cold-worked 316L Stainless Steel (<Latex math="E = 187.5 \text{ GPa}" />) and 'Titanium' refers to Ti-6Al-4V Alloy (<Latex math="E = 114.5 \text{ GPa}" />).<br/><br/>
-                        <em>Formula Note:</em> <Latex math="1 \text{ GPa} = 1,000 \text{ MPa}" />. To balance standard metric units (Newtons and mm) so the formulas output stress exactly in MPa (<Latex math="\text{N/mm}^2" />), the modulus <Latex math="E" /> must be inputted into the formulas as <Latex math="187,500" /> and <Latex math="114,500" /> respectively.
-                    </p>
-                </div>
+                <NoteOnMaterials />
 
                 {/* Concept 1: Bending Stress & AMI */}
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 bg-white dark:bg-slate-800 p-6 md:p-8 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-700">
@@ -1721,6 +1738,36 @@
                         <p className="text-sm md:text-base leading-relaxed text-slate-700 dark:text-slate-300 mt-3">
                             The interactive model and mathematics below present the influence of working length in the <strong>bridging configuration</strong>. Because the load-bearing mechanism is identical, this analysis is also a valid approximation of what happens in a compressed construct that is subjected to open-gap loading. Increasing the working length makes the plate more flexible; however, this flexibility either alleviates or multiplies plate stress depending on whether cortical contact can be re-established.
                         </p>
+                    </div>
+
+                    <div className="bg-indigo-50 dark:bg-indigo-900/15 p-6 rounded-2xl border border-indigo-100 dark:border-indigo-800/50">
+                        <h3 className="text-base font-bold text-indigo-800 dark:text-indigo-300 mb-4">
+                            Why Loading Conditions Matter: Four-Point Bending vs. Axial Loading
+                        </h3>
+                        <p className="text-sm md:text-base leading-relaxed text-slate-700 dark:text-slate-300 mb-4">
+                            When studying how working length affects plate stress, it is essential to understand the difference between two loading models, because they produce fundamentally different mechanical behaviour.
+                        </p>
+
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                            <div className="bg-white dark:bg-slate-800 p-4 rounded-xl border border-indigo-200 dark:border-indigo-800/50">
+                                <h4 className="font-bold text-sm text-indigo-700 dark:text-indigo-400 mb-2">Pure Bending (Four-Point Bending)</h4>
+                                <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
+                                    In a four-point bending test, two equal and opposing moments are applied to the ends of the beam. Between the inner loading points, the <strong>bending moment (M) is perfectly constant</strong> — it does not depend on how much the beam deflects or how long the span is. Because the stress formula is <strong>σ = M·y / I</strong>, and M stays fixed regardless of working length, <strong>lengthening the working length alone does not increase the stress</strong> in the material within the unsupported span. Deflection increases with span, but the moment — and therefore the stress — does not follow.
+                                </p>
+                            </div>
+                            <div className="bg-white dark:bg-slate-800 p-4 rounded-xl border border-rose-200 dark:border-rose-800/50">
+                                <h4 className="font-bold text-sm text-rose-700 dark:text-rose-400 mb-2">Axial Loading (P-Delta Effect)</h4>
+                                <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
+                                    When a compressive axial load (P) is applied, the situation changes completely. As the working length increases, the plate deflects more. This deflection shifts the line of action of P away from the plate's axis, creating an ever-growing eccentricity (e + δ). The bending moment is no longer fixed: <strong>M = P × (e + δ)</strong>. The load actively <em>takes advantage</em> of the extra deflection to generate a larger moment. Because it is this bending moment that bends the structure and creates stress in the material, <strong>increasing working length exponentially raises stress</strong> — a compounding, self-amplifying process known as the P-Delta effect.
+                                </p>
+                            </div>
+                        </div>
+
+                        <div className="bg-indigo-100 dark:bg-indigo-900/30 rounded-lg p-4 border border-indigo-200 dark:border-indigo-700/50">
+                            <p className="text-xs text-indigo-900 dark:text-indigo-200 leading-relaxed">
+                                <strong>Why axial loading is used in this model:</strong> Both loading conditions produce greater deflection as working length increases. However, in pure bending the moment stays constant — making working length clinically irrelevant to stress in that idealised scenario. In axial loading, deflection feeds directly back into the moment, making the relationship between working length and plate stress clinically critical. The interactive model below uses axial loading precisely to capture this real-world P-Delta behaviour and demonstrate why every additional millimetre of working length matters in a bridging or open-gap construct.
+                            </p>
+                        </div>
                     </div>
 
                     <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
