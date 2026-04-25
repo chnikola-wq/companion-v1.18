@@ -121,6 +121,22 @@
             return { lower, upper };
         };
 
+        // --- MATH TOGGLE HELPER ---
+        const MathToggle = ({ children }) => {
+            const [open, setOpen] = React.useState(false);
+            return (
+                <div>
+                    <button
+                        onClick={() => setOpen(o => !o)}
+                        className="flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800/50 px-3 py-1.5 rounded-lg hover:bg-blue-100 dark:hover:bg-blue-900/40 transition-colors mt-2"
+                    >
+                        {open ? '▲ Hide the math' : '▼ See the math'}
+                    </button>
+                    {open && <div className="fade-in mt-2">{children}</div>}
+                </div>
+            );
+        };
+
         // --- WIDGET 1: THE MATERIAL PARADOX (Changing 'n') ---
         const ParadoxInteractiveGraph = () => {
             const boneE = 18.0;
@@ -132,6 +148,7 @@
 
             const [nValue, setNValue] = useState(nTi); 
             const [isDragging, setIsDragging] = useState(false);
+            const [showMath, setShowMath] = useState(false);
             
             const sliderRef = useRef(null);
             const svgRef = useRef(null);
@@ -294,6 +311,14 @@
                     </div>
 
                     <div className="relative w-full max-w-3xl mx-auto select-none">
+                        <div className="flex justify-end mb-2">
+                            <button
+                                onClick={() => setShowMath(o => !o)}
+                                className="flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800/50 px-3 py-1.5 rounded-lg hover:bg-blue-100 dark:hover:bg-blue-900/40 transition-colors"
+                            >
+                                {showMath ? '▲ Hide the math' : '▼ See the math'}
+                            </button>
+                        </div>
                         <svg viewBox="0 0 500 790" className="w-full h-auto font-sans bg-white dark:bg-slate-850 rounded-xl border border-slate-200 dark:border-slate-700 shadow-inner overflow-visible" style={{ touchAction: 'pan-y' }} ref={svgRef}>
                             
                             <text x="25" y="30" className="fill-slate-800 dark:fill-slate-100 font-bold text-sm">Physical Cross-Section (Axis Shift)</text>
@@ -320,11 +345,11 @@
 
                             <text x="25" y="210" className="fill-slate-800 dark:fill-slate-100 font-bold text-sm">Composite AMI Curve</text>
                             
-                            <foreignObject x="0" y="220" width="500" height="90">
+                            {showMath && <foreignObject x="0" y="220" width="500" height="90">
                                 <div className="w-full h-full flex justify-center text-[8.5px] md:text-[10px] text-slate-800 dark:text-slate-200 px-2">
                                     <Latex math={mathAMI} />
                                 </div>
-                            </foreignObject>
+                            </foreignObject>}
                             
                             {/* Gridlines & Limits for AMI */}
                             <line x1="50" y1="310" x2="450" y2="310" className="stroke-slate-200 dark:stroke-slate-700 stroke-dasharray-2 stroke-1" />
@@ -364,11 +389,11 @@
 
                             <text x="25" y="510" className="fill-slate-800 dark:fill-slate-100 font-bold text-sm">Plate Stress Curve</text>
                             
-                            <foreignObject x="0" y="525" width="500" height="50">
+                            {showMath && <foreignObject x="0" y="525" width="500" height="50">
                                 <div className="w-full h-full flex justify-center text-[10px] md:text-xs text-slate-800 dark:text-slate-200 px-2">
                                     <Latex math={mathStress} />
                                 </div>
-                            </foreignObject>
+                            </foreignObject>}
 
                             {/* Gridlines & Limits for Stress */}
                             <line x1="50" y1="590" x2="450" y2="590" className="stroke-slate-200 dark:stroke-slate-700 stroke-dasharray-2 stroke-1" />
@@ -433,6 +458,7 @@
             const [ipValue, setIpValue] = useState(25); 
             const [material, setMaterial] = useState('Ti');
             const [isDragging, setIsDragging] = useState(false);
+            const [showMath, setShowMath] = useState(false);
             
             const sliderRef = useRef(null);
             const svgRef = useRef(null);
@@ -639,6 +665,14 @@
                     </div>
 
                     <div className="relative w-full max-w-3xl mx-auto select-none">
+                        <div className="flex justify-end mb-2">
+                            <button
+                                onClick={() => setShowMath(o => !o)}
+                                className="flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800/50 px-3 py-1.5 rounded-lg hover:bg-blue-100 dark:hover:bg-blue-900/40 transition-colors"
+                            >
+                                {showMath ? '▲ Hide the math' : '▼ See the math'}
+                            </button>
+                        </div>
                         <svg viewBox="0 0 500 790" className="w-full h-auto font-sans bg-white dark:bg-slate-850 rounded-xl border border-slate-200 dark:border-slate-700 shadow-inner overflow-visible" style={{ touchAction: 'pan-y' }} ref={svgRef}>
                             
                             <text x="25" y="30" className="fill-slate-800 dark:fill-slate-100 font-bold text-sm">Physical Cross-Section (Growing Geometry)</text>
@@ -666,11 +700,11 @@
 
                             <text x="25" y="210" className="fill-slate-800 dark:fill-slate-100 font-bold text-sm">Composite AMI Curve</text>
                             
-                            <foreignObject x="0" y="220" width="500" height="90">
+                            {showMath && <foreignObject x="0" y="220" width="500" height="90">
                                 <div className="w-full h-full flex justify-center text-[8.5px] md:text-[10px] text-slate-800 dark:text-slate-200 px-2">
                                     <Latex math={mathAMI} />
                                 </div>
-                            </foreignObject>
+                            </foreignObject>}
                             
                             {/* Gridlines & Limits for AMI */}
                             <line x1="50" y1="310" x2="450" y2="310" className="stroke-slate-200 dark:stroke-slate-700 stroke-dasharray-2 stroke-1" />
@@ -704,11 +738,11 @@
 
                             <text x="25" y="510" className="fill-slate-800 dark:fill-slate-100 font-bold text-sm">Plate Stress Curve</text>
                             
-                            <foreignObject x="0" y="525" width="500" height="50">
+                            {showMath && <foreignObject x="0" y="525" width="500" height="50">
                                 <div className="w-full h-full flex justify-center text-[10px] md:text-xs text-slate-800 dark:text-slate-200 px-2">
                                     <Latex math={mathStress} />
                                 </div>
-                            </foreignObject>
+                            </foreignObject>}
 
                             {/* Gridlines & Limits for Stress */}
                             <line x1="50" y1="590" x2="450" y2="590" className="stroke-slate-200 dark:stroke-slate-700 stroke-dasharray-2 stroke-1" />
@@ -975,6 +1009,7 @@
             const [wlValue, setWlValue] = useState(60); 
             const [material, setMaterial] = useState('Ti');
             const [isDragging, setIsDragging] = useState(false);
+            const [showMath, setShowMath] = useState(false);
             
             const sliderRef = useRef(null);
             const svgRef = useRef(null);
@@ -1132,13 +1167,25 @@
                             </div>
                         </div>
 
-                        <div className="mt-6 p-4 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl flex flex-col gap-2 shadow-sm">
+                        <div className="flex items-center justify-between mt-6 mb-2">
+                            <span className="text-xs font-bold text-slate-600 dark:text-slate-400 uppercase tracking-wider">Live Calculation</span>
+                            <button
+                                onClick={() => setShowMath(o => !o)}
+                                className="flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800/50 px-3 py-1.5 rounded-lg hover:bg-blue-100 dark:hover:bg-blue-900/40 transition-colors"
+                            >
+                                {showMath ? '▲ Hide the math' : '▼ See the math'}
+                            </button>
+                        </div>
+
+                        {showMath && (
+                        <div className="mt-2 p-4 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl flex flex-col gap-2 shadow-sm fade-in">
                             <div className="flex flex-col gap-1 items-center w-full overflow-x-auto pb-2">
                                 <div className="text-xs md:text-sm text-slate-800 dark:text-slate-200 w-full text-center py-1"><Latex math={mathK} /></div>
                                 <div className="text-xs md:text-sm text-slate-800 dark:text-slate-200 w-full text-center py-1"><Latex math={mathM} /></div>
                                 <div className={`text-[11px] md:text-[13px] font-bold px-4 py-2 rounded-lg mt-2 shadow-sm w-full text-center ${material === 'Ti' ? 'text-emerald-700 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-900/20 border border-emerald-100 dark:border-emerald-800/50' : 'text-rose-700 dark:text-rose-400 bg-rose-50 dark:bg-rose-900/20 border border-rose-100 dark:border-rose-800/50'}`}><Latex math={mathSigma} /></div>
                             </div>
                         </div>
+                        )}
                     </div>
 
                     <div className="relative w-full max-w-3xl mx-auto select-none">
@@ -1238,13 +1285,15 @@
                             The bending moment acts about a <strong>Bending Axis</strong> (which is perpendicular to the stress vectors and always passes through the centroid, which coincides with the centre of gravity in homogeneous materials). This generates a stress gradient within the implant. The stress is <strong>not uniform</strong>: it is zero along the <strong>Neutral Axis</strong> (the plane where compression transitions to tension) and increases linearly the further away you move from it (<Latex math="y" />).
                         </p>
                         <div>
-                            <div className="bg-blue-50 dark:bg-blue-900/20 p-4 rounded-lg border-l-4 border-blue-400 text-sm text-slate-700 dark:text-slate-300 flex items-center justify-between">
-                                <span className="font-semibold">Stress Formula:</span>
-                                <Latex math={`\\sigma = \\frac{M \\cdot y}{\\text{AMI}}`} />
-                            </div>
-                            <p className="text-xs text-slate-500 dark:text-slate-400 mt-2 italic">
-                                *Note: Stress (<Latex math="\sigma" />) is measured in Megapascals (MPa), which is mathematically equivalent to Newtons per square millimetre (N/mm²).
-                            </p>
+                            <MathToggle>
+                                <div className="bg-blue-50 dark:bg-blue-900/20 p-4 rounded-lg border-l-4 border-blue-400 text-sm text-slate-700 dark:text-slate-300 flex items-center justify-between">
+                                    <span className="font-semibold">Stress Formula:</span>
+                                    <Latex math={`\\sigma = \\frac{M \\cdot y}{\\text{AMI}}`} />
+                                </div>
+                                <p className="text-xs text-slate-500 dark:text-slate-400 mt-2 italic">
+                                    *Note: Stress (<Latex math="\sigma" />) is measured in Megapascals (MPa), which is mathematically equivalent to Newtons per square millimetre (N/mm²).
+                                </p>
+                            </MathToggle>
                         </div>
                         <p className="text-sm text-slate-700 dark:text-slate-300 leading-relaxed">
                             To fight this stress, we rely on the <strong>Area Moment of Inertia (AMI)</strong>. This is purely a <em>geometric</em> property—it does not depend on the material. It measures the implant's geometric resistance to bending about the bending axis. The less the structure is prone to bend under a certain moment (M), the less the stress it will experience. So, AMI fights stress, and it depends on the distribution of the structure's cross-sectional area about the bending axis. The further away the structure is from the axis, the greater the AMI.
@@ -1335,16 +1384,20 @@
                         <p className="text-sm text-slate-700 dark:text-slate-300 leading-relaxed">
                             Because the neutral axis rests between them, the <strong>Parallel Axis Theorem</strong> governs stability. We transform the plate into an equivalent piece of bone by multiplying its geometric contribution by <Latex math="n" />. The Composite AMI equals the local AMIs plus the geometric spread of their areas:
                         </p>
-                        <p className="text-sm text-slate-700 dark:text-slate-300 leading-relaxed bg-rose-50/50 dark:bg-rose-900/10 p-3 rounded-lg border border-rose-200 dark:border-rose-800/50">
-                            <Latex math={'\\text{Composite AMI} = n(I_{plate} + A_{plate} d_{plate}^2) + (I_{bone} + A_{bone} d_{bone}^2)'} />
-                        </p>
+                        <MathToggle>
+                            <p className="text-sm text-slate-700 dark:text-slate-300 leading-relaxed bg-rose-50/50 dark:bg-rose-900/10 p-3 rounded-lg border border-rose-200 dark:border-rose-800/50">
+                                <Latex math={'\\text{Composite AMI} = n(I_{plate} + A_{plate} d_{plate}^2) + (I_{bone} + A_{bone} d_{bone}^2)'} />
+                            </p>
+                        </MathToggle>
                         <p className="text-sm text-slate-700 dark:text-slate-300 leading-relaxed">
                             Because we transformed the plate into bone, we must multiply the numerator of the stress formula by <Latex math="n" /> to convert the stress back into the stiffer plate material:
                         </p>
-                        <div className="bg-rose-50 dark:bg-rose-900/20 p-4 rounded-lg border-l-4 border-rose-400 text-sm text-slate-700 dark:text-slate-300 flex items-center justify-between">
-                            <span className="font-semibold text-xs md:text-sm">Composite Plate Stress:</span>
-                            <Latex math={`\\sigma_{\\text{plate}} = n \\cdot \\frac{M \\cdot y}{\\text{Composite AMI}}`} />
-                        </div>
+                        <MathToggle>
+                            <div className="bg-rose-50 dark:bg-rose-900/20 p-4 rounded-lg border-l-4 border-rose-400 text-sm text-slate-700 dark:text-slate-300 flex items-center justify-between">
+                                <span className="font-semibold text-xs md:text-sm">Composite Plate Stress:</span>
+                                <Latex math={`\\sigma_{\\text{plate}} = n \\cdot \\frac{M \\cdot y}{\\text{Composite AMI}}`} />
+                            </div>
+                        </MathToggle>
                     </div>
                 </div>
 
@@ -1424,9 +1477,11 @@
                         <p className="text-sm text-slate-700 dark:text-slate-300 leading-relaxed">
                             The answer lies in <strong>Load Sharing</strong>. Once the fracture is completely compressed, the intact bone and the plate essentially act as two structural springs working in parallel. They share the total external bending moment (<Latex math="M_{total}" />) based on their relative rotational stiffness.
                         </p>
-                        <p className="text-sm text-slate-700 dark:text-slate-300 leading-relaxed bg-indigo-50/50 dark:bg-indigo-900/10 p-3 rounded-lg border border-indigo-200 dark:border-indigo-800/50 text-center font-serif overflow-x-auto">
-                            <Latex math={'M_{plate} = M_{total} \\times \\left( \\frac{K_{plate}}{K_{plate} + K_{bone}} \\right)'} />
-                        </p>
+                        <MathToggle>
+                            <p className="text-sm text-slate-700 dark:text-slate-300 leading-relaxed bg-indigo-50/50 dark:bg-indigo-900/10 p-3 rounded-lg border border-indigo-200 dark:border-indigo-800/50 text-center font-serif overflow-x-auto">
+                                <Latex math={'M_{plate} = M_{total} \\times \\left( \\frac{K_{plate}}{K_{plate} + K_{bone}} \\right)'} />
+                            </p>
+                        </MathToggle>
                         <p className="text-sm text-slate-700 dark:text-slate-300 leading-relaxed">
                             To understand this, imagine a massive draught horse (the stiff, compressed bone) and a smaller pony (the flexible plate) pulling a cart side-by-side. Because they are rigidly harnessed together, the stiffer, stronger horse naturally takes on the vast majority of the work. The formula above simply calculates the "percentage share" of the total bending force that the plate is forced to absorb, based on its rotational stiffness (<Latex math="K_{plate}" />) relative to the bone's stiffness (<Latex math="K_{bone}" />).
                         </p>
