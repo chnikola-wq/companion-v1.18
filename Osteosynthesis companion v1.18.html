@@ -1997,12 +1997,12 @@
             }, [darkMode]);
 
             const tabs = [
-                { id: 'core', label: 'Closed-gap', icon: <IconBookOpen /> },
-                { id: 'workingLength', label: 'Open-gap', icon: <IconActivity /> },
-                { id: 'constructs', label: 'Constructs & Planes', icon: <IconLayers /> },
-                { id: 'offset', label: 'Plate Offset', icon: <IconShield /> },
-                { id: 'screws', label: 'DCP vs LCP', icon: <IconSettings /> },
-                { id: 'advanced', label: 'Advanced Mechanics', icon: <IconCpu /> }
+                { id: 'core', label: 'Closed-gap', subtitle: 'Composite structure', icon: <IconBookOpen /> },
+                { id: 'workingLength', label: 'Open-gap', subtitle: '&Bridging', icon: <IconActivity /> },
+                { id: 'constructs', label: 'Constructs & Planes', subtitle: 'Single & Double', icon: <IconLayers /> },
+                { id: 'offset', label: 'Plate Offset', subtitle: 'Moment trap', icon: <IconShield /> },
+                { id: 'screws', label: 'DCP vs LCP', subtitle: 'Bone-screw preload', icon: <IconSettings /> },
+                { id: 'advanced', label: 'Advanced Mechanics', subtitle: 'AMI', icon: <IconCpu /> }
             ];
 
             const showReferences = ['workingLength', 'offset', 'screws', 'advanced'].includes(activeTab);
@@ -2035,9 +2035,10 @@
                                 <button 
                                     key={tab.id}
                                     onClick={() => setActiveTab(tab.id)}
-                                    className={`flex-grow min-w-[120px] flex items-center justify-center py-3 px-3 text-[11px] md:text-xs font-bold uppercase tracking-wider rounded-lg transition-all duration-300 ${activeTab === tab.id ? 'bg-white dark:bg-slate-700 text-blue-600 dark:text-blue-400 shadow-md ring-1 ring-slate-300 dark:ring-slate-600' : 'text-slate-500 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-800 hover:text-slate-700 dark:hover:text-slate-200'}`}
+                                    className={`flex-grow min-w-[120px] flex flex-col items-center justify-center py-3 px-3 rounded-lg transition-all duration-300 ${activeTab === tab.id ? 'bg-white dark:bg-slate-700 text-blue-600 dark:text-blue-400 shadow-md ring-1 ring-slate-300 dark:ring-slate-600' : 'text-slate-500 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-800 hover:text-slate-700 dark:hover:text-slate-200'}`}
                                 >
-                                    {tab.icon} {tab.label}
+                                    <span className="flex items-center gap-1 text-[11px] md:text-xs font-bold uppercase tracking-wider">{tab.icon} {tab.label}</span>
+                                    {tab.subtitle && <span className="text-[9px] md:text-[10px] font-normal normal-case tracking-normal mt-0.5 opacity-75">{tab.subtitle}</span>}
                                 </button>
                             ))}
                         </div>
